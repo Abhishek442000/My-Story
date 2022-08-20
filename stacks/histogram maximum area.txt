@@ -1,0 +1,43 @@
+stack<int>s;
+    int n, max_area = 0;
+    cin >> n;
+    int left[n], right[n], arr[n];
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+    for (int i = 0; i < n; i++) {
+        while ((!s.empty()) && (arr[s.top()] > arr[i])) {
+            right[s.top()] = i;
+            s.pop();
+        }
+        s.push(i);
+    }
+
+    while (!s.empty()) {
+        right[s.top()] = n;
+        s.pop();
+    }
+    trav(it, right) {
+        cout << it << " ";
+    }
+    el;
+    for (int i = n - 1; i >= 0; i--) {
+        while ((!s.empty()) && (arr[s.top()] > arr[i])) {
+            left[s.top()] = i;
+            s.pop();
+        }
+        s.push(i);
+    }
+    while (!s.empty()) {
+        left[s.top()] = -1;
+        s.pop();
+    }
+    trav(it, left) {
+        cout << it << " ";
+    }
+    el;
+    for (int i = 0; i < n; i++) {
+        int len = right[i] - left[i] - 1;
+        // cout<<left[i]<<" "<<right[i]<<"\n";
+        max_area = max(max_area, len * arr[i]);
+    }
+    cout << max_area;

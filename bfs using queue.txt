@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct btree{
+    int value;
+    btree *left;
+    btree *right;
+    btree(int val){
+        value=val;
+        left=NULL;
+        right=NULL;
+    }
+};
+ 
+void inorder(btree *root){
+    if(!root)
+        return;
+    inorder(root->left);
+    cout<<(root->value)<<" ";
+    inorder(root->right);
+}
+ 
+int main(){
+    btree *root=new btree(1);
+    root->left=new btree(2);
+    root->right=new btree(3);
+    root->left->left=new btree(4);
+    root->left->right=new btree(5);
+    root->right->left=new btree(6);
+    root->right->right=new btree(7);
+    // inorder(root);
+    queue<btree*>q;
+    q.push(root);
+    while(!q.empty()){
+        btree *start=q.front();
+        q.pop();
+        cout<<start->value<<" ";
+        if(start->left)
+            q.push(start->left);
+        if(start->right)
+            q.push(start->right);
+    }
+}

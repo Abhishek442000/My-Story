@@ -1,0 +1,142 @@
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/****** Debugging Class *****/
+vector<string> vec_splitter(string s) {
+    s += ',';
+    vector<string> res;
+    while (!s.empty()) {
+        res.push_back(s.substr(0, s.find(',')));
+        s = s.substr(s.find(',') + 1);
+    }
+    return res;
+}
+void debug_out(
+    vector<string> __attribute__ ((unused)) args,
+    __attribute__ ((unused)) int idx,
+    __attribute__ ((unused)) int LINE_NUM) { cout << endl; }
+template <typename Head, typename... Tail>
+void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
+    if (idx > 0) cout << ", "; else cout << "Line(" << LINE_NUM << ") ";
+    stringstream ss; ss << H;
+    cout << args[idx] << " = " << ss.str();
+    debug_out(args, idx + 1, LINE_NUM, T...);
+}
+template<class K, class V>ostream& operator<<(ostream&s, const pair<K, V>&p) {s << '<' << p.first << ", " << p.second << '>'; return s;}
+template < class T, class = typename T::value_type, class = typename enable_if < !is_same<T, string>::value >::type >
+ostream & operator<<(ostream&s, const T&v) {s << '['; for (auto&x : v) {s << x << ", ";} if (!v.empty()) {s << "\b\b";} s << ']'; return s;}
+void __prnt() {cout << endl;} template<class T, class...Ts>void __prnt(T&&a, Ts&&...etc) {cout << a << ' '; __prnt(etc...);}
+#ifndef ONLINE_JUDGE
+#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
+#define debug2(...) __prnt(__VA_ARGS__)
+#else
+#define debug(...) 42
+#define debug2(...) 42
+#endif
+/**********************************************/
+
+using ll = long long;
+using vb = vector<bool>;
+using vvb = vector<vb>;
+using vi = vector<int>;
+using vvi = vector<vi>;
+using vl = vector<ll>;
+using vvl = vector<vl>;
+using vc = vector<char>;
+using vvc = vector<vc>;
+using vs = vector<string>;
+
+typedef long double ld;
+typedef complex<ld> cd;
+
+typedef pair<int, int> pi;
+typedef pair<ll, ll> pl;
+typedef pair<ld, ld> pd;
+
+
+typedef vector<ld> vd;
+typedef vector<pi> vpi;
+typedef vector<pl> vpl;
+typedef vector<cd> vcd;
+
+template<class T> using pq = priority_queue<T>;
+template<class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+
+#define FOR(i, a, b) for (int i=a; i<(b); i++)
+#define F0R(i, a) for (int i=0; i<(a); i++)
+#define FORd(i,a,b) for (int i = (b)-1; i >= a; i--)
+#define F0Rd(i,a) for (int i = (a)-1; i >= 0; i--)
+#define trav(a,x) for (auto& a : x)
+#define uid(a, b) uniform_int_distribution<int>(a, b)(rng)
+
+#define sz(x) (int)(x).size()
+#define mp make_pair
+#define pb push_back
+#define f first
+#define s second
+#define lb lower_bound
+#define ub upper_bound
+#define all(x) x.begin(), x.end()
+#define ins insert
+#define asort(a) sort(a.begin(),a.end())
+#define dsort(a) sort(a.begin(),a.end(),greater<int>())
+#define el cout<<endl
+#define mem(a,i) memset(a, i, sizeof(a))
+#define N 100010
+
+
+template<class T> bool ckmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
+template<class T> bool ckmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
+
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int MOD = 1000000007;
+const char nl = '\n';
+const int MX = 400001 + 5;
+ll powerMod(ll a, ll b, ll md) {return (!b ? 1 : (b & 1 ? a * powerMod(a * a % md, b / 2, md) % md : powerMod(a * a % md, b / 2, md) % md));}
+ll modInv(ll x) {return powerMod(x, MOD - 2, MOD);}
+
+bool cmp1(pair<int, int> a, pair<int, int> b) {
+    if (a.second != b.second) {
+        return a.second < b.second;
+    }
+    return a.first < b.first;
+}
+
+void solve() {
+    int n;
+    cin >> n;
+    int arr[n], ans[n];
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+    stack<int>s;
+    for (int i = n - 1; i >= 0; i--) {
+        while ((!s.empty()) && (arr[s.top()] < arr[i])) {
+            ans[s.top()] = i;
+            s.pop();
+        }
+        s.push(i);
+    }
+    while (!s.empty()) {
+        ans[s.top()] = -1;
+        s.pop();
+    }
+    for (int i = 0; i < n; i++)
+        cout << i - ans[i] << " ";
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(0);
+    cin.exceptions(ios::badbit | ios::failbit);
+    int t = 1;
+    //cin >> t;
+    while (t--) {
+        solve();
+    }
+}
+// for strings always think about the there are only 26
+

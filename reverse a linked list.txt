@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+struct List{
+    int value;
+    List *next;
+    List (int val){
+        value=val;
+        next=NULL;
+    }
+};
+ 
+void print(List *head){
+    while(head){
+        cout<<head->value<<" ";
+        head=head->next;
+    }
+    cout<<"\n";
+}
+ 
+List *reverse(List * head){
+    List *curr=head,*prev=NULL,*next=NULL;
+    while(curr){
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+    return prev;
+}
+ 
+int main(){
+    // creating list of size n
+    int n;
+    cin>>n;
+    List *head=NULL,*pre=NULL;
+    while(n--){
+        int val;
+        cin>>val;
+        List *temp=new List(val);
+        if(!head)
+            head=temp;
+        else
+            pre->next=temp;
+        pre=temp;
+    }
+    cout<<"Before Reversal \n";
+    print(head);
+    head=reverse(head);
+    cout<<"After Reversal \n";
+    print(head);
+}

@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct btree{
+    int value;
+    btree *left;
+    btree *right;
+    btree(int val){
+        value=val;
+        left=NULL;
+        right=NULL;
+    }
+};
+ 
+void inorder(btree *root){
+    if(!root)
+        return;
+    inorder(root->left);
+    cout<<(root->value)<<" ";
+    inorder(root->right);
+}
+ 
+int height(btree *root){
+    if(!root)
+        return 0;
+    return max(height(root->left)+1,height(root->right)+1);
+}
+ 
+int main(){
+    btree *root=new btree(1);
+    root->left=new btree(2);
+    root->right=new btree(3);
+    root->left->left=new btree(4);
+    root->left->right=new btree(5);
+    root->right->left=new btree(6);
+    root->right->right=new btree(7);
+    root->right->right->left=new btree(12);
+    // inorder(root);
+    cout<<height(root);
+}

@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct dlist{
+    int value;
+    dlist *next;
+    dlist *prev;
+    dlist(int val){
+        value=val;
+        next=NULL;
+        prev=NULL;
+    }
+};
+int Find(dlist *left,dlist *right){
+    int ans=0;
+    while(left && right){
+        if(left->value != right->value)
+            break;
+        ans+=2;
+        left=left->prev;
+        right=right->next;
+    }
+    return ans;
+}
+int ans(dlist *head){
+    int sol=0;
+    while(head){
+        sol=max(sol,1+Find(head->prev,head->next));
+        sol=max(sol,Find(head,head->next));
+        head=head->next;
+    }
+    return sol;
+}
+int main(){
+    int n;
+    cin>>n;
+    dlist *head=NULL,*tail=NULL;
+    while(n--){
+        int val;
+        cin>>val;
+        dlist *temp=new dlist(val);
+        if(!head){
+            head=temp;
+        }
+        else{
+            tail->next=temp;
+            temp->prev=tail;
+        }
+        tail=temp;
+    }
+    // print(head);
+    cout<<ans(head);
+ 
+}
+
+7
+2 3 7 3 2 12 24
+
+output 
+5

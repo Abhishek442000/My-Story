@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct dlist{
+    int value;
+    dlist *next;
+    dlist *prev;
+    dlist(int val){
+        value=val;
+        next=NULL;
+        prev=NULL;
+    }
+};
+void print(dlist *head){
+    while(head){
+        cout<<head->value<<" ";
+        head=head->next;
+    }
+}
+void Sort(dlist *head){
+    while(head){
+        dlist *temp=head;
+        while(temp && temp->prev){
+            if((temp->prev)->value<=temp->value)
+                break;
+            swap((temp->prev)->value,temp->value);
+            temp=temp->prev;
+        }
+        head=head->next;
+    }
+    // print(copy);
+}
+int main(){
+    int n;
+    cin>>n;
+    dlist *head=NULL,*pre=NULL;
+    while(n--){
+        int val;
+        cin>>val;
+        dlist *temp=new dlist(val);
+        if(!head){
+            head=temp;
+        }
+        else{
+            pre->next=temp;
+            temp->prev=pre;
+        }
+        pre=temp;
+    }
+    Sort(head);
+    print(head);
+}
